@@ -1,13 +1,16 @@
 package ru.masnaviev.habittracker.controllers;
 
 import ru.masnaviev.habittracker.model.Habit;
-import ru.masnaviev.habittracker.model.Session;
+import ru.masnaviev.habittracker.security.Session;
 import ru.masnaviev.habittracker.model.User;
 import ru.masnaviev.habittracker.service.HabitService;
 import ru.masnaviev.habittracker.service.UserService;
 
 import java.util.List;
 
+/**
+ * Контроллер для управления функциями администратора, включая управление пользователями и привычками.
+ */
 public class AdminController {
 
     private final UserService userService;
@@ -18,27 +21,73 @@ public class AdminController {
         this.habitService = habitService;
     }
 
+    /**
+     * Получает список всех пользователей.
+     *
+     * @param session текущая сессия пользователя (должна быть с правами администратора)
+     * @return список всех пользователей
+     * @throws SecurityException если у текущего пользователя нет прав администратора
+     */
     public List<User> getAllUsers(Session session) {
-        return userService.getAllUsers(session);
+        userService.checkAdminRights(session);
+        return userService.getAllUsers();
     }
 
+    /**
+     * Блокирует пользователя по его идентификатору.
+     *
+     * @param userId  идентификатор пользователя, которого нужно заблокировать
+     * @param session текущая сессия пользователя (должна быть с правами администратора)
+     * @throws SecurityException если у текущего пользователя нет прав администратора
+     */
     public void blockUser(long userId, Session session) {
-        userService.blockUser(userId, session);
+        userService.checkAdminRights(session);
+        userService.blockUser(userId);
     }
 
+    /**
+     * Разблокирует пользователя по его идентификатору.
+     *
+     * @param userId  идентификатор пользователя, которого нужно разблокировать
+     * @param session текущая сессия пользователя (должна быть с правами администратора)
+     * @throws SecurityException если у текущего пользователя нет прав администратора
+     */
     public void unblockUser(long userId, Session session) {
-        userService.unblockUser(userId, session);
+        userService.checkAdminRights(session);
+        userService.unblockUser(userId);
     }
 
+    /**
+     * Удаляет пользователя по его идентификатору.
+     *
+     * @param userId  идентификатор пользователя, которого нужно удалить
+     * @param session текущая сессия пользователя (должна быть с правами администратора)
+     * @throws SecurityException если у текущего пользователя нет прав администратора
+     */
     public void deleteUser(long userId, Session session) {
-        userService.deleteUserByAdmin(userId, session);
+        userService.checkAdminRights(session);
+        userService.deleteUserByAdmin(userId);
     }
 
+    /**
+     * Получает список всех привычек.
+     *
+     * @param session текущая сессия пользователя (должна быть с правами администратора)
+     * @return список всех привычек
+     * @throws SecurityException если у текущего пользователя нет прав администратора
+     */
     public List<Habit> getAllHabits(Session session) {
         userService.checkAdminRights(session);
         return habitService.getAllHabits();
     }
 
+    /**
+     * Удаляет привычку по её идентификатору.
+     *
+     * @param habitId идентификатор привычки, которую нужно удалить
+     * @param session текущая сессия пользователя (должна быть с правами администратора)
+     * @throws SecurityException если у текущего пользователя нет прав администратора
+     */
     public void deleteHabit(long habitId, Session session) {
         userService.checkAdminRights(session);
         habitService.deleteHabit(habitId);

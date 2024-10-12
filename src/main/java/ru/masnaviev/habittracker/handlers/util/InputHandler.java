@@ -1,4 +1,4 @@
-package ru.masnaviev.habittracker.util;
+package ru.masnaviev.habittracker.handlers.util;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -19,7 +19,6 @@ public class InputHandler {
             }
         }
     }
-
 
     public static String getUserInputString() {
         try {

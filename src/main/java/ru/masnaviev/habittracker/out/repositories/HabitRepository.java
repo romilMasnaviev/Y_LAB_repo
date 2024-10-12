@@ -1,4 +1,4 @@
-package ru.masnaviev.habittracker.repositories;
+package ru.masnaviev.habittracker.out.repositories;
 
 import ru.masnaviev.habittracker.model.Habit;
 

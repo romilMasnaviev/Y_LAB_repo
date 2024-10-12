@@ -6,12 +6,12 @@ import ru.masnaviev.habittracker.controllers.UserController;
 import ru.masnaviev.habittracker.handlers.AdminInputHandler;
 import ru.masnaviev.habittracker.handlers.HabitInputHandler;
 import ru.masnaviev.habittracker.handlers.UserInputHandler;
-import ru.masnaviev.habittracker.model.Session;
+import ru.masnaviev.habittracker.security.Session;
 import ru.masnaviev.habittracker.service.HabitService;
 import ru.masnaviev.habittracker.service.UserService;
 
-import static ru.masnaviev.habittracker.app.ConsoleView.*;
-import static ru.masnaviev.habittracker.util.InputHandler.getUserInputInt;
+import static ru.masnaviev.habittracker.app.util.ConsoleView.*;
+import static ru.masnaviev.habittracker.handlers.util.InputHandler.getUserInputInt;
 
 public class HabitTracker {
     private final UserInputHandler userInputHandler;
@@ -35,7 +35,6 @@ public class HabitTracker {
 
     public void start() {
         boolean running = true;
-
         while (running) {
             if (!session.isLoggedIn()) {
                 displayLoginMenu();
@@ -52,7 +51,7 @@ public class HabitTracker {
                     case 2 -> habitManagement();
                     case 3 -> trackingHabits();
                     case 4 -> habitInputHandler.viewStatistics();
-                    case 5 -> viewNotifications();
+                    case 5 -> displayNoImplementation();
                     case 6 -> administration();
                     case 7 -> logout();
                     case 8 -> running = false;
@@ -99,19 +98,13 @@ public class HabitTracker {
         }
     }
 
-
     private void accountManagement() {
         displayAccountMenu();
         switch (getUserInputInt()) {
             case 1 -> userInputHandler.update();
             case 2 -> userInputHandler.delete();
-            case 3 -> System.out.println("Функциональность еще не добавлена");
+            case 3 -> displayNoImplementation();
             default -> displayIncorrectChoice();
         }
     }
-
-    private void viewNotifications() {
-        System.out.println("Функциональность еще не добавлена");
-    }
-
 }

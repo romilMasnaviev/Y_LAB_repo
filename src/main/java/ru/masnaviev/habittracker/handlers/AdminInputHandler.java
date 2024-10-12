@@ -2,14 +2,19 @@ package ru.masnaviev.habittracker.handlers;
 
 import ru.masnaviev.habittracker.controllers.AdminController;
 import ru.masnaviev.habittracker.model.Habit;
-import ru.masnaviev.habittracker.model.Session;
+import ru.masnaviev.habittracker.security.Session;
 import ru.masnaviev.habittracker.model.User;
 
 import java.util.List;
 
 import static java.lang.System.out;
-import static ru.masnaviev.habittracker.util.InputHandler.getUserInputInt;
+import static ru.masnaviev.habittracker.handlers.util.PromptsForHandlers.executeAction;
+import static ru.masnaviev.habittracker.handlers.util.PromptsForHandlers.promptForUserId;
 
+/**
+ * Обработчик ввода админа.
+ * Обеспечивает взаимодействие админа с системой для управления пользователями и привычками.
+ */
 public class AdminInputHandler {
 
     private final AdminController adminController;
@@ -20,6 +25,10 @@ public class AdminInputHandler {
         this.session = session;
     }
 
+    /**
+     * Отображает список всех пользователей в системе.
+     * Если пользователей нет, выводит соответствующее сообщение.
+     */
     public void viewAllUsers() {
         try {
             List<User> users = adminController.getAllUsers(session);
@@ -34,9 +43,12 @@ public class AdminInputHandler {
         } catch (Exception e) {
             out.println("Ошибка: " + e.getMessage());
         }
-
     }
 
+    /**
+     * Блокирует пользователя по его идентификатору.
+     * Идентификатор пользователя запрашивается у администратора.
+     */
     public void blockUser() {
         long userId = promptForUserId("Введите ID пользователя для блокировки:");
         executeAction(() -> {
@@ -45,6 +57,10 @@ public class AdminInputHandler {
         });
     }
 
+    /**
+     * Разблокирует пользователя по его идентификатору.
+     * Идентификатор пользователя запрашивается у администратора.
+     */
     public void unblockUser() {
         long userId = promptForUserId("Введите ID пользователя для разблокировки:");
         executeAction(() -> {
@@ -53,6 +69,10 @@ public class AdminInputHandler {
         });
     }
 
+    /**
+     * Удаляет пользователя по его идентификатору.
+     * Идентификатор пользователя запрашивается у администратора.
+     */
     public void deleteUser() {
         long userId = promptForUserId("Введите ID пользователя для удаления:");
         executeAction(() -> {
@@ -61,6 +81,10 @@ public class AdminInputHandler {
         });
     }
 
+    /**
+     * Отображает список всех привычек в системе.
+     * Если привычек нет, выводит соответствующее сообщение.
+     */
     public void viewAllHabits() {
         List<Habit> habits = adminController.getAllHabits(session);
         if (habits.isEmpty()) {
@@ -73,25 +97,15 @@ public class AdminInputHandler {
         }
     }
 
+    /**
+     * Удаляет привычку по её идентификатору.
+     * Идентификатор привычки запрашивается у администратора.
+     */
     public void deleteHabit() {
         long habitId = promptForUserId("Введите ID привычки для удаления:");
         executeAction(() -> {
             adminController.deleteHabit(habitId, session);
             out.println("Привычка успешно удалена.");
         });
-    }
-
-
-    private long promptForUserId(String prompt) {
-        out.println(prompt);
-        return getUserInputInt();
-    }
-
-    private void executeAction(Runnable action) {
-        try {
-            action.run();
-        } catch (Exception e) {
-            out.println("Ошибка: " + e.getMessage());
-        }
     }
 }

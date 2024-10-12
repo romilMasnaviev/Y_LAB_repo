@@ -1,4 +1,6 @@
-package ru.masnaviev.habittracker.model;
+package ru.masnaviev.habittracker.security;
+
+import ru.masnaviev.habittracker.model.User;
 
 public class Session {
     private User user;

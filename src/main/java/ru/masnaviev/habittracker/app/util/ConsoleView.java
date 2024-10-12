@@ -1,4 +1,5 @@
-package ru.masnaviev.habittracker.app;
+package ru.masnaviev.habittracker.app.util;
+
 
 public class ConsoleView {
 
@@ -60,5 +61,9 @@ public class ConsoleView {
                 5. Получение списка всех привычек
                 6. Удаление привычки
                 """);
+    }
+
+    public static void displayNoImplementation(){
+        System.out.println("Функциональность еще не добавлена");
     }
 }
