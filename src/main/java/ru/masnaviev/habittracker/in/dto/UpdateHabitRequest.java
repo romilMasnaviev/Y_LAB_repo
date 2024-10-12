@@ -1,11 +1,20 @@
 package ru.masnaviev.habittracker.in.dto;
 
-import ru.masnaviev.habittracker.model.Frequency;
+import ru.masnaviev.habittracker.models.Frequency;
 
 public class UpdateHabitRequest {
     private String title;
     private String description;
     private Frequency frequency;
+
+    public UpdateHabitRequest() {
+    }
+
+    public UpdateHabitRequest(String title, String description, Frequency frequency) {
+        this.title = title;
+        this.description = description;
+        this.frequency = frequency;
+    }
 
     public String getTitle() {
         return title;

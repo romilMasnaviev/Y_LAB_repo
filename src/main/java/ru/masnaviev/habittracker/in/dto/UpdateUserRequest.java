@@ -5,6 +5,15 @@ public class UpdateUserRequest {
     private String password;
     private String name;
 
+    public UpdateUserRequest() {
+    }
+
+    public UpdateUserRequest(String email, String password, String name) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+    }
+
     public String getEmail() {
         return email;
     }

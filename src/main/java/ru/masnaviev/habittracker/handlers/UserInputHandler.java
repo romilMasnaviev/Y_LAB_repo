@@ -4,89 +4,77 @@ import ru.masnaviev.habittracker.controllers.UserController;
 import ru.masnaviev.habittracker.in.dto.CreateUserRequest;
 import ru.masnaviev.habittracker.in.dto.LoginUserRequest;
 import ru.masnaviev.habittracker.in.dto.UpdateUserRequest;
-import ru.masnaviev.habittracker.model.Session;
-import ru.masnaviev.habittracker.model.User;
+import ru.masnaviev.habittracker.models.User;
+import ru.masnaviev.habittracker.security.Session;
 
-import static ru.masnaviev.habittracker.util.InputHandler.getUserInputString;
+import static ru.masnaviev.habittracker.handlers.util.PromptsForHandlers.*;
 
+/**
+ * Класс UserInputHandler отвечает за обработку взаимодействия пользователя с системой
+ * в процессе управления профилем пользователя: создания, обновления, удаления и входа в систему.
+ */
 public class UserInputHandler {
     private final UserController userController;
     private final Session session;
 
-    public UserInputHandler(Session session) {
-        userController = new UserController();
+    public UserInputHandler(Session session, UserController controller) {
         this.session = session;
+        this.userController = controller;
     }
 
-
+    /**
+     * Метод для создания нового пользователя.
+     * Запрашивает у пользователя имя, почту и пароль,
+     * создаёт запрос и передаёт его контроллеру.
+     */
     public void create() {
         CreateUserRequest createRequest = new CreateUserRequest();
 
-        System.out.println("Введите имя");
-        createRequest.setName(getUserInputString());
-        System.out.println("Введите почту");
-        createRequest.setEmail(getUserInputString());
-        System.out.println("Введите пароль");
-        createRequest.setPassword(getUserInputString());
-
-        try {
-            userController.create(createRequest);
-            System.out.println("Пользователь успешно создан.");
-        } catch (Exception e) {
-            System.out.println("Ошибка: " + e.getMessage());
-        }
+        createRequest.setName(promptForInput("Введите имя"));
+        createRequest.setEmail(promptForInput("Введите почту"));
+        createRequest.setPassword(promptForInput("Введите пароль"));
+        executeAction(() -> userController.create(createRequest),
+                "Пользователь успешно создан.");
     }
 
+    /**
+     * Метод для обновления текущего профиля пользователя.
+     * Извлекает текущего пользователя из сессии и запрашивает обновлённые данные.
+     * Если пользователь вводит пустое значение, остаются текущие значения полей.
+     */
     public void update() {
         UpdateUserRequest updateRequest = new UpdateUserRequest();
+        User currentUser = session.getUser();
 
-        System.out.println("Текущий пользователь: " + session.getUser());
+        updateRequest.setName(promptForUpdate("Введите имя", currentUser.getName()));
+        updateRequest.setEmail(promptForUpdate("Введите почту", currentUser.getEmail()));
+        updateRequest.setPassword(promptForUpdate("Введите пароль", currentUser.getPassword()));
 
-        System.out.println("Введите имя (или нажмите Enter чтобы оставить текущее)");
-        String name = getUserInputString();
-        updateRequest.setName(name.isEmpty() ? session.getUser().getName() : name);
-
-        System.out.println("Введите почту (или нажмите Enter чтобы оставить текущее)");
-        String email = getUserInputString();
-        updateRequest.setEmail(email.isEmpty() ? session.getUser().getEmail() : email);
-
-        System.out.println("Введите пароль (или нажмите Enter чтобы оставить текущее)");
-        String password = getUserInputString();
-        updateRequest.setPassword(password.isEmpty() ? session.getUser().getPassword() : password);
-
-        try {
-            User user = userController.update(updateRequest, session.getUser().getId());
-            session.setUser(user);
-            System.out.println("Пользователь успешно обновлен.");
-        } catch (Exception e) {
-            System.out.println("Ошибка: " + e.getMessage());
-            update();
-        }
+        executeAction(() -> userController.update(updateRequest, currentUser.getId()),
+                "Пользователь успешно обновлен.");
     }
 
+    /**
+     * Метод для удаления текущего пользователя.
+     * Удаляет пользователя по идентификатору и очищает данные пользователя в сессии.
+     */
     public void delete() {
-        try {
-            userController.delete(session.getUser().getId());
-            session.setUser(null);
-
-            System.out.println("Профиль успешно удален.");
-        } catch (Exception e) {
-            System.out.println("Ошибка: " + e.getMessage());
-        }
+        executeAction(() -> userController.delete(session.getUser().getId()),
+                "Профиль успешно удален.");
+        session.setUser(null);
     }
 
+    /**
+     * Метод для входа в систему.
+     * Запрашивает у пользователя почту и пароль и проверяет аутентификацию.
+     */
     public void login() {
         LoginUserRequest loginRequest = new LoginUserRequest();
 
-        System.out.println("Введите почту");
-        loginRequest.setEmail(getUserInputString());
-        System.out.println("Введите пароль");
-        loginRequest.setPassword(getUserInputString());
-        try {
-            session.setUser(userController.authenticateUser(loginRequest));
-            System.out.println("Вход успешен.");
-        } catch (Exception e) {
-            System.out.println("Ошибка: " + e.getMessage());
-        }
+        loginRequest.setEmail(promptForInput("Введите почту"));
+        loginRequest.setPassword(promptForInput("Введите пароль"));
+
+        executeAction(() -> session.setUser(userController.authenticateUser(loginRequest)),
+                "Вход успешен.");
     }
 }

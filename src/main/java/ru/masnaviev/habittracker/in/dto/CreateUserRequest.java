@@ -14,6 +14,15 @@ public class CreateUserRequest {
     public CreateUserRequest() {
     }
 
+    @Override
+    public String toString() {
+        return "CreateUserRequest{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     public String getEmail() {
         return email;
     }

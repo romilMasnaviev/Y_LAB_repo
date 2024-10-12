@@ -3,7 +3,7 @@ package ru.masnaviev.habittracker.in.converter;
 import ru.masnaviev.habittracker.in.dto.CreateUserRequest;
 import ru.masnaviev.habittracker.in.dto.LoginUserRequest;
 import ru.masnaviev.habittracker.in.dto.UpdateUserRequest;
-import ru.masnaviev.habittracker.model.User;
+import ru.masnaviev.habittracker.models.User;
 
 public class UserConverter {
 
