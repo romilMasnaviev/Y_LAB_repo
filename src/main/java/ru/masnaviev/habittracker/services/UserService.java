@@ -1,7 +1,7 @@
-package ru.masnaviev.habittracker.service;
+package ru.masnaviev.habittracker.services;
 
-import ru.masnaviev.habittracker.model.Role;
-import ru.masnaviev.habittracker.model.User;
+import ru.masnaviev.habittracker.models.Role;
+import ru.masnaviev.habittracker.models.User;
 import ru.masnaviev.habittracker.out.repositories.UserRepository;
 import ru.masnaviev.habittracker.security.Session;
 

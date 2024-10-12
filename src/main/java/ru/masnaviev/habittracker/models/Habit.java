@@ -1,4 +1,4 @@
-package ru.masnaviev.habittracker.model;
+package ru.masnaviev.habittracker.models;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

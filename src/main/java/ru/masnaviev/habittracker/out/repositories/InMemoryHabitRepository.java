@@ -1,6 +1,6 @@
 package ru.masnaviev.habittracker.out.repositories;
 
-import ru.masnaviev.habittracker.model.Habit;
+import ru.masnaviev.habittracker.models.Habit;
 
 import java.time.LocalDate;
 import java.util.*;

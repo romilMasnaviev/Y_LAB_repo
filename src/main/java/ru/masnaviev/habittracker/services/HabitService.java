@@ -1,10 +1,10 @@
-package ru.masnaviev.habittracker.service;
+package ru.masnaviev.habittracker.services;
 
 import ru.masnaviev.habittracker.controllers.util.StatisticEntity;
 import ru.masnaviev.habittracker.controllers.util.TimePeriod;
-import ru.masnaviev.habittracker.model.Frequency;
-import ru.masnaviev.habittracker.model.Habit;
-import ru.masnaviev.habittracker.model.Status;
+import ru.masnaviev.habittracker.models.Frequency;
+import ru.masnaviev.habittracker.models.Habit;
+import ru.masnaviev.habittracker.models.Status;
 import ru.masnaviev.habittracker.out.repositories.HabitRepository;
 
 import java.time.LocalDate;

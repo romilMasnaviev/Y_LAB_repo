@@ -2,7 +2,7 @@ package ru.masnaviev.habittracker.in.converter;
 
 import ru.masnaviev.habittracker.in.dto.CreateHabitRequest;
 import ru.masnaviev.habittracker.in.dto.UpdateHabitRequest;
-import ru.masnaviev.habittracker.model.Habit;
+import ru.masnaviev.habittracker.models.Habit;
 
 public class HabitConverter {
 

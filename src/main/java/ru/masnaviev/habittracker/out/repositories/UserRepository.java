@@ -1,6 +1,6 @@
 package ru.masnaviev.habittracker.out.repositories;
 
-import ru.masnaviev.habittracker.model.User;
+import ru.masnaviev.habittracker.models.User;
 
 import java.util.List;
 import java.util.Optional;

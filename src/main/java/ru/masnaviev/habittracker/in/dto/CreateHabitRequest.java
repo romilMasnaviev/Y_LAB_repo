@@ -1,6 +1,6 @@
 package ru.masnaviev.habittracker.in.dto;
 
-import ru.masnaviev.habittracker.model.Frequency;
+import ru.masnaviev.habittracker.models.Frequency;
 
 public class CreateHabitRequest {
     private String title;

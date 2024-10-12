@@ -11,8 +11,8 @@ import ru.masnaviev.habittracker.out.repositories.InMemoryHabitRepository;
 import ru.masnaviev.habittracker.out.repositories.InMemoryUserRepository;
 import ru.masnaviev.habittracker.out.repositories.UserRepository;
 import ru.masnaviev.habittracker.security.Session;
-import ru.masnaviev.habittracker.service.HabitService;
-import ru.masnaviev.habittracker.service.UserService;
+import ru.masnaviev.habittracker.services.HabitService;
+import ru.masnaviev.habittracker.services.UserService;
 
 import static ru.masnaviev.habittracker.app.util.ConsoleView.*;
 import static ru.masnaviev.habittracker.handlers.util.InputHandler.getUserInputInt;

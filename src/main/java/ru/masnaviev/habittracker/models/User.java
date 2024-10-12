@@ -1,4 +1,4 @@
-package ru.masnaviev.habittracker.model;
+package ru.masnaviev.habittracker.models;
 
 public class User {
     private final Role role;

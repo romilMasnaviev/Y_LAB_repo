@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import ru.masnaviev.habittracker.model.Habit;
-import ru.masnaviev.habittracker.model.User;
+import ru.masnaviev.habittracker.models.Habit;
+import ru.masnaviev.habittracker.models.User;
 import ru.masnaviev.habittracker.security.Session;
-import ru.masnaviev.habittracker.service.HabitService;
-import ru.masnaviev.habittracker.service.UserService;
+import ru.masnaviev.habittracker.services.HabitService;
+import ru.masnaviev.habittracker.services.UserService;
 
 import java.util.Arrays;
 import java.util.List;

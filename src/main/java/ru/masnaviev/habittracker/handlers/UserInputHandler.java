@@ -4,7 +4,7 @@ import ru.masnaviev.habittracker.controllers.UserController;
 import ru.masnaviev.habittracker.in.dto.CreateUserRequest;
 import ru.masnaviev.habittracker.in.dto.LoginUserRequest;
 import ru.masnaviev.habittracker.in.dto.UpdateUserRequest;
-import ru.masnaviev.habittracker.model.User;
+import ru.masnaviev.habittracker.models.User;
 import ru.masnaviev.habittracker.security.Session;
 
 import static ru.masnaviev.habittracker.handlers.util.PromptsForHandlers.*;

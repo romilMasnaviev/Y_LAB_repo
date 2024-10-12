@@ -4,8 +4,8 @@ import ru.masnaviev.habittracker.in.converter.UserConverter;
 import ru.masnaviev.habittracker.in.dto.CreateUserRequest;
 import ru.masnaviev.habittracker.in.dto.LoginUserRequest;
 import ru.masnaviev.habittracker.in.dto.UpdateUserRequest;
-import ru.masnaviev.habittracker.model.User;
-import ru.masnaviev.habittracker.service.UserService;
+import ru.masnaviev.habittracker.models.User;
+import ru.masnaviev.habittracker.services.UserService;
 
 /**
  * Контроллер для управления пользователями.

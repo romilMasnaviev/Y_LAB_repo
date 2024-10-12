@@ -5,8 +5,8 @@ import ru.masnaviev.habittracker.controllers.util.StatisticEntity;
 import ru.masnaviev.habittracker.controllers.util.TimePeriod;
 import ru.masnaviev.habittracker.in.dto.CreateHabitRequest;
 import ru.masnaviev.habittracker.in.dto.UpdateHabitRequest;
-import ru.masnaviev.habittracker.model.Frequency;
-import ru.masnaviev.habittracker.model.Habit;
+import ru.masnaviev.habittracker.models.Frequency;
+import ru.masnaviev.habittracker.models.Habit;
 import ru.masnaviev.habittracker.security.Session;
 
 import java.time.LocalDate;
