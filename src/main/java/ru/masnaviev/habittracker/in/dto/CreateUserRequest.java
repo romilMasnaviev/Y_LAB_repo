@@ -5,6 +5,15 @@ public class CreateUserRequest {
     private String password;
     private String name;
 
+    public CreateUserRequest(String email, String password, String name) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+    }
+
+    public CreateUserRequest() {
+    }
+
     @Override
     public String toString() {
         return "CreateUserRequest{" +

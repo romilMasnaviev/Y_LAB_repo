@@ -30,7 +30,7 @@ public class HabitController {
      * Создает новую привычку для пользователя.
      *
      * @param createRequest запрос на создание привычки.
-     * @param userId идентификатор пользователя.
+     * @param userId        идентификатор пользователя.
      * @return созданная привычка.
      * @throws IllegalArgumentException если данные в запросе некорректны.
      */
@@ -44,7 +44,7 @@ public class HabitController {
      * Обновляет существующую привычку.
      *
      * @param updateRequest запрос на обновление привычки.
-     * @param id идентификатор привычки.
+     * @param id            идентификатор привычки.
      * @return обновленная привычка.
      */
     public Habit update(UpdateHabitRequest updateRequest, long id) {
@@ -93,7 +93,7 @@ public class HabitController {
     /**
      * Получает выполнения привычки за указанный период времени.
      *
-     * @param habitId идентификатор привычки.
+     * @param habitId    идентификатор привычки.
      * @param timePeriod период времени для получения выполнений.
      * @return список дат выполнений.
      */
@@ -104,7 +104,7 @@ public class HabitController {
     /**
      * Получает статистику привычек пользователя за указанный период времени.
      *
-     * @param userId идентификатор пользователя.
+     * @param userId     идентификатор пользователя.
      * @param timePeriod период времени для получения статистики.
      * @return список статистики.
      */

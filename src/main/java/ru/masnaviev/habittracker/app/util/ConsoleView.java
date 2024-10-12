@@ -63,7 +63,7 @@ public class ConsoleView {
                 """);
     }
 
-    public static void displayNoImplementation(){
+    public static void displayNoImplementation() {
         System.out.println("Функциональность еще не добавлена");
     }
 }

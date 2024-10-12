@@ -2,7 +2,6 @@ package ru.masnaviev.habittracker.service;
 
 import ru.masnaviev.habittracker.model.Role;
 import ru.masnaviev.habittracker.model.User;
-import ru.masnaviev.habittracker.out.repositories.InMemoryUserRepository;
 import ru.masnaviev.habittracker.out.repositories.UserRepository;
 import ru.masnaviev.habittracker.security.Session;
 
@@ -18,8 +17,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserService() {
-        this.userRepository = new InMemoryUserRepository();
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     /**
@@ -124,7 +123,7 @@ public class UserService {
      * @throws SecurityException если у пользователя нет прав администратора
      */
     public void checkAdminRights(Session session) throws SecurityException {
-        if (!session.getUser().getRole().equals(Role.ADMIN))
+        if (!session.isAdmin())
             throw new SecurityException("У вас нет прав администратора");
     }
 

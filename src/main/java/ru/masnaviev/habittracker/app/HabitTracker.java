@@ -6,6 +6,10 @@ import ru.masnaviev.habittracker.controllers.UserController;
 import ru.masnaviev.habittracker.handlers.AdminInputHandler;
 import ru.masnaviev.habittracker.handlers.HabitInputHandler;
 import ru.masnaviev.habittracker.handlers.UserInputHandler;
+import ru.masnaviev.habittracker.out.repositories.HabitRepository;
+import ru.masnaviev.habittracker.out.repositories.InMemoryHabitRepository;
+import ru.masnaviev.habittracker.out.repositories.InMemoryUserRepository;
+import ru.masnaviev.habittracker.out.repositories.UserRepository;
 import ru.masnaviev.habittracker.security.Session;
 import ru.masnaviev.habittracker.service.HabitService;
 import ru.masnaviev.habittracker.service.UserService;
@@ -20,8 +24,11 @@ public class HabitTracker {
     private final Session session;
 
     public HabitTracker() {
-        UserService userService = new UserService();
-        HabitService habitService = new HabitService();
+        HabitRepository habitRepository = new InMemoryHabitRepository();
+        UserRepository userRepository = new InMemoryUserRepository();
+
+        UserService userService = new UserService(userRepository);
+        HabitService habitService = new HabitService(habitRepository);
 
         HabitController habitController = new HabitController(habitService);
         UserController userController = new UserController(userService);

@@ -2,8 +2,8 @@ package ru.masnaviev.habittracker.handlers;
 
 import ru.masnaviev.habittracker.controllers.AdminController;
 import ru.masnaviev.habittracker.model.Habit;
-import ru.masnaviev.habittracker.security.Session;
 import ru.masnaviev.habittracker.model.User;
+import ru.masnaviev.habittracker.security.Session;
 
 import java.util.List;
 

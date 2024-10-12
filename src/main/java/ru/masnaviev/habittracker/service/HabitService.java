@@ -6,7 +6,6 @@ import ru.masnaviev.habittracker.model.Frequency;
 import ru.masnaviev.habittracker.model.Habit;
 import ru.masnaviev.habittracker.model.Status;
 import ru.masnaviev.habittracker.out.repositories.HabitRepository;
-import ru.masnaviev.habittracker.out.repositories.InMemoryHabitRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,8 +24,8 @@ public class HabitService {
 
     private final HabitRepository habitRepository;
 
-    public HabitService() {
-        habitRepository = new InMemoryHabitRepository();
+    public HabitService(HabitRepository habitRepository) {
+        this.habitRepository = habitRepository;
     }
 
     /**

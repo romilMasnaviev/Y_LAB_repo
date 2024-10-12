@@ -1,5 +1,6 @@
 package ru.masnaviev.habittracker.security;
 
+import ru.masnaviev.habittracker.model.Role;
 import ru.masnaviev.habittracker.model.User;
 
 public class Session {
@@ -19,5 +20,9 @@ public class Session {
 
     public boolean isLoggedIn() {
         return user != null;
+    }
+
+    public boolean isAdmin() {
+        return user.getRole().equals(Role.ADMIN);
     }
 }

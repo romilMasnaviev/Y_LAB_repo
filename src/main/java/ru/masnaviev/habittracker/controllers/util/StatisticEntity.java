@@ -9,6 +9,38 @@ public class StatisticEntity {
     private long currentStreak;
     private double successRate;
 
+    public long getHabitId() {
+        return habitId;
+    }
+
+    public void setHabitId(long habitId) {
+        this.habitId = habitId;
+    }
+
+    public List<LocalDate> getHabitExecutions() {
+        return habitExecutions;
+    }
+
+    public void setHabitExecutions(List<LocalDate> habitExecutions) {
+        this.habitExecutions = habitExecutions;
+    }
+
+    public long getCurrentStreak() {
+        return currentStreak;
+    }
+
+    public void setCurrentStreak(long currentStreak) {
+        this.currentStreak = currentStreak;
+    }
+
+    public double getSuccessRate() {
+        return successRate;
+    }
+
+    public void setSuccessRate(double successRate) {
+        this.successRate = successRate;
+    }
+
     @Override
     public String toString() {
         return "StatisticEntity{" +
@@ -17,21 +49,5 @@ public class StatisticEntity {
                 ", currentStreak=" + currentStreak +
                 ", successRate=" + successRate +
                 '}';
-    }
-
-    public void setHabitId(long habitId) {
-        this.habitId = habitId;
-    }
-
-    public void setHabitExecutions(List<LocalDate> habitExecutions) {
-        this.habitExecutions = habitExecutions;
-    }
-
-    public void setCurrentStreak(long currentStreak) {
-        this.currentStreak = currentStreak;
-    }
-
-    public void setSuccessRate(double successRate) {
-        this.successRate = successRate;
     }
 }

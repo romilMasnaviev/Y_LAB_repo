@@ -6,6 +6,13 @@ public class CreateHabitRequest {
     private String title;
     private String description;
     private Frequency frequency;
+    public CreateHabitRequest() {
+    }
+    public CreateHabitRequest(String title, String description, Frequency frequency) {
+        this.title = title;
+        this.description = description;
+        this.frequency = frequency;
+    }
 
     public String getTitle() {
         return title;

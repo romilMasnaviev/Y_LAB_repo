@@ -6,13 +6,18 @@ import java.util.ArrayList;
 
 public class Habit {
     private final LocalDateTime created;
-    private final ArrayList<LocalDate> executionHistory;
+    private ArrayList<LocalDate> executionHistory;
     private long userId;
     private long id;
     private String title;
     private String description;
     private Frequency frequency;
     private Status status;
+
+    public Habit() {
+        created = LocalDateTime.now();
+        executionHistory = new ArrayList<>();
+    }
 
     public Habit(String title, String description, Frequency frequency) {
         this.title = title;
@@ -31,6 +36,9 @@ public class Habit {
         return executionHistory;
     }
 
+    public void setExecutionHistory(ArrayList<LocalDate> executionHistory) {
+        this.executionHistory = executionHistory;
+    }
 
     public Status getStatus() {
         return status;

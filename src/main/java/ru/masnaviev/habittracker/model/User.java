@@ -24,10 +24,23 @@ public class User {
         this.blocked = false;
     }
 
+    public User(Role role, long id, String email, String password, String name, boolean blocked) {
+        this.role = role;
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.blocked = blocked;
+    }
+
     public User(String email, String password) {
         this.role = Role.USER;
         this.email = email;
         this.password = password;
+    }
+
+    public User() {
+        role = Role.USER;
     }
 
     public Role getRole() {

@@ -1,7 +1,7 @@
 package ru.masnaviev.habittracker.handlers.util;
 
-import ru.masnaviev.habittracker.model.Frequency;
 import ru.masnaviev.habittracker.controllers.util.TimePeriod;
+import ru.masnaviev.habittracker.model.Frequency;
 
 import static java.lang.System.out;
 import static ru.masnaviev.habittracker.handlers.util.InputHandler.getUserInputInt;

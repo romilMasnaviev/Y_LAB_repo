@@ -1,8 +1,8 @@
 package ru.masnaviev.habittracker.controllers;
 
 import ru.masnaviev.habittracker.model.Habit;
-import ru.masnaviev.habittracker.security.Session;
 import ru.masnaviev.habittracker.model.User;
+import ru.masnaviev.habittracker.security.Session;
 import ru.masnaviev.habittracker.service.HabitService;
 import ru.masnaviev.habittracker.service.UserService;
 
