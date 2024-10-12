@@ -3,10 +3,7 @@ package ru.masnaviev.habittracker.repositories;
 import ru.masnaviev.habittracker.model.Habit;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class InMemoryHabitRepository implements HabitRepository {
@@ -49,5 +46,11 @@ public class InMemoryHabitRepository implements HabitRepository {
     @Override
     public boolean exists(long id) {
         return habits.containsKey(id);
+    }
+
+    @Override
+    public List<Habit> getAll() {
+
+        return new ArrayList<>(habits.values());
     }
 }

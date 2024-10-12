@@ -1,15 +1,18 @@
 package ru.masnaviev.habittracker.repositories;
 
+import ru.masnaviev.habittracker.model.Role;
 import ru.masnaviev.habittracker.model.User;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class InMemoryUserRepository implements UserRepository {
 
     private static long id = 0;
     private final Map<Long, User> users = new HashMap<>();
+
+    {
+        add(new User("admin@mail.ru", "admin", "admin", Role.ADMIN));
+    }
 
     @Override
     public User add(User user) {
@@ -38,5 +41,10 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public Optional<User> findById(long id) {
         return Optional.ofNullable(users.get(id));
+    }
+
+    @Override
+    public List<User> getAll() {
+        return new ArrayList<>(users.values());
     }
 }

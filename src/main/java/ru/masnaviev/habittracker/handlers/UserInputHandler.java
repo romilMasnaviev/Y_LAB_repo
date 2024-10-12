@@ -14,9 +14,9 @@ public class UserInputHandler {
     private final UserController userController;
     private final Session session;
 
-    public UserInputHandler(Session session) {
-        userController = new UserController();
+    public UserInputHandler(Session session, UserController controller) {
         this.session = session;
+        this.userController = controller;
     }
 
     public void create() {

@@ -12,9 +12,9 @@ public class UserController {
     private final UserService userService;
     private final UserConverter converter;
 
-    public UserController() {
+    public UserController(UserService userService) {
         this.converter = new UserConverter();
-        this.userService = new UserService();
+        this.userService = userService;
     }
 
     public User create(CreateUserRequest createRequest) {
@@ -35,7 +35,6 @@ public class UserController {
 
     public User authenticateUser(LoginUserRequest loginRequest) {
         validLoginUserRequest(loginRequest);
-
         User user = converter.loginUserRequestConvertToUser(loginRequest);
         return userService.authenticateUser(user);
     }

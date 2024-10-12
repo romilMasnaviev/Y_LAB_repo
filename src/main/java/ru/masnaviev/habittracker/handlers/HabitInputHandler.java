@@ -17,9 +17,9 @@ public class HabitInputHandler {
     private final HabitController habitController;
     private final Session session;
 
-    public HabitInputHandler(Session session) {
-        habitController = new HabitController();
+    public HabitInputHandler(Session session, HabitController habitController) {
         this.session = session;
+        this.habitController = habitController;
     }
 
     public void create() {

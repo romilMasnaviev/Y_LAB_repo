@@ -162,4 +162,12 @@ public class HabitService {
         }
         return 0;
     }
+
+    public List<Habit> getAllHabits() {
+        return habitRepository.getAll();
+    }
+
+    public void deleteHabit(long habitId) {
+        habitRepository.delete(habitId);
+    }
 }

@@ -20,6 +20,7 @@ public class InputHandler {
         }
     }
 
+
     public static String getUserInputString() {
         try {
             if (scanner.hasNextLine()) {

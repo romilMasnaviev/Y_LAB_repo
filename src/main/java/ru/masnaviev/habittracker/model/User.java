@@ -6,18 +6,40 @@ public class User {
     private String email;
     private String password;
     private String name;
+    private boolean blocked;
 
     public User(String email, String password, String name) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.role = Role.USER;
+        this.blocked = false;
+    }
+
+    public User(String email, String password, String name, Role role) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.role = role;
+        this.blocked = false;
     }
 
     public User(String email, String password) {
         this.role = Role.USER;
         this.email = email;
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
     }
 
     public String getEmail() {

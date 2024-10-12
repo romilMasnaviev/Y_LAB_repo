@@ -19,4 +19,6 @@ public interface HabitRepository {
     List<LocalDate> getStatistic(long id, LocalDate start, LocalDate end);
 
     boolean exists(long id);
+
+    List<Habit> getAll();
 }

@@ -1,9 +1,12 @@
 package ru.masnaviev.habittracker.service;
 
+import ru.masnaviev.habittracker.model.Role;
+import ru.masnaviev.habittracker.model.Session;
 import ru.masnaviev.habittracker.model.User;
 import ru.masnaviev.habittracker.repositories.InMemoryUserRepository;
 import ru.masnaviev.habittracker.repositories.UserRepository;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -42,6 +45,7 @@ public class UserService {
         if (!existingUser.getPassword().equals(user.getPassword())) {
             throw new IllegalArgumentException("Неправильный пароль для пользователя с email " + user.getEmail());
         }
+        checkUserBlocked(existingUser);
         return existingUser;
     }
 
@@ -70,6 +74,50 @@ public class UserService {
         }
         if (source.getPassword() != null) {
             target.setPassword(source.getPassword());
+        }
+    }
+
+    public List<User> getAllUsers(Session session) {
+        checkAdminRights(session);
+        return userRepository.getAll();
+    }
+
+    public void blockUser(long userId, Session session) {
+        checkAdminRights(session);
+        User user = get(userId);
+
+        if (user.getRole().equals(Role.ADMIN)) {
+            System.out.println("Нельзя заблокировать администратора");
+        } else {
+            user.setBlocked(true);
+        }
+    }
+
+    public void unblockUser(long userId, Session session) {
+        checkAdminRights(session);
+        userRepository.findById(userId).ifPresent(user -> user.setBlocked(false));
+    }
+
+    public void checkAdminRights(Session session) {
+        if (!session.getUser().getRole().equals(Role.ADMIN))
+            throw new SecurityException("У вас нет прав администратора");
+    }
+
+    public void checkUserBlocked(User user) {
+        if (user.isBlocked())
+            throw new SecurityException("Ваш аккаунт заблокирован");
+    }
+
+    public void deleteUserByAdmin(long userId, Session session) {
+        checkAdminRights(session);
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getRole().equals(Role.ADMIN)) {
+                System.out.println("Нельзя заблокировать администратора");
+            } else {
+                userRepository.delete(userId);
+            }
         }
     }
 }

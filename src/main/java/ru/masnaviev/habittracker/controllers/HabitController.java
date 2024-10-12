@@ -16,8 +16,8 @@ public class HabitController {
     private final HabitService habitService;
     private final HabitConverter habitConverter;
 
-    public HabitController() {
-        this.habitService = new HabitService();
+    public HabitController(HabitService habitService) {
+        this.habitService = habitService;
         this.habitConverter = new HabitConverter();
     }
 

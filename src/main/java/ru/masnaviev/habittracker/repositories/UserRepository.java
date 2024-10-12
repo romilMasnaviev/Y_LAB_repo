@@ -2,6 +2,7 @@ package ru.masnaviev.habittracker.repositories;
 
 import ru.masnaviev.habittracker.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository {
@@ -16,4 +17,5 @@ public interface UserRepository {
 
     Optional<User> findById(long id);
 
+    List<User> getAll();
 }
