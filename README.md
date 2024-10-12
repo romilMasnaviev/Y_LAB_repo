@@ -25,6 +25,8 @@ mvn clean package
 - **Email**: admin@mail.ru
 - **Пароль**: admin
 
+## Структура меню
+- resources/struct.txt
 
 
 
