@@ -1,10 +1,8 @@
 package ru.masnaviev.habittracker.repositories;
 
 import ru.masnaviev.habittracker.model.Habit;
-import ru.masnaviev.habittracker.model.TimePeriod;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,14 +21,10 @@ public class InMemoryHabitRepository implements HabitRepository {
     }
 
     @Override
-    public Habit get(long id) {
-        return habits.get(id);
-    }
-
-    @Override
-    public List<Habit> getAll(long id) {
-        return habits.values().stream().filter(
-                habit -> habit.getUserId() == id).collect(Collectors.toList());
+    public List<Habit> getAll(long userId) {
+        return habits.values().stream()
+                .filter(habit -> habit.getUserId() == userId)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -45,7 +39,7 @@ public class InMemoryHabitRepository implements HabitRepository {
 
     @Override
     public List<LocalDate> getStatistic(long id, LocalDate start, LocalDate end) {
-        List<LocalDate> executionHistory= habits.get(id).getExecutionHistory();
+        List<LocalDate> executionHistory = habits.get(id).getExecutionHistory();
         return executionHistory.stream()
                 .filter(a -> !a.isBefore(start))
                 .filter(a -> !a.isAfter(end))

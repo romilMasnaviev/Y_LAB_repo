@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Habit {
+    private final LocalDateTime created;
+    private final ArrayList<LocalDate> executionHistory;
     private long userId;
     private long id;
     private String title;
     private String description;
     private Frequency frequency;
-    private LocalDateTime created;
-    private ArrayList<LocalDate> executionHistory;
     private Status status;
 
     public Habit(String title, String description, Frequency frequency) {
@@ -27,17 +27,10 @@ public class Habit {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
     public ArrayList<LocalDate> getExecutionHistory() {
         return executionHistory;
     }
 
-    public void setExecutionHistory(ArrayList<LocalDate> executionHistory) {
-        this.executionHistory = executionHistory;
-    }
 
     public Status getStatus() {
         return status;
@@ -87,11 +80,13 @@ public class Habit {
         this.description = description;
     }
 
+
     @Override
     public String toString() {
         return "Habit{" +
-                "id=" + id + '\'' +
-                "title='" + title + '\'' +
+                "userId=" + userId +
+                ", id=" + id +
+                ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", frequency=" + frequency +
                 ", created=" + created +

@@ -5,6 +5,7 @@ import ru.masnaviev.habittracker.repositories.InMemoryUserRepository;
 import ru.masnaviev.habittracker.repositories.UserRepository;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public class UserService {
 
@@ -21,6 +22,12 @@ public class UserService {
 
     public User update(User updatedUser, long id) {
         User existingUser = get(id);
+        if (updatedUser.getEmail() != null && !updatedUser.getEmail().equals(existingUser.getEmail())) {
+            Optional<User> userWithEmail = userRepository.findByEmail(updatedUser.getEmail());
+            if (userWithEmail.isPresent() && userWithEmail.get().getId() != id) {
+                throw new IllegalArgumentException("Пользователь с таким email уже существует");
+            }
+        }
         copyNonNullFields(updatedUser, existingUser);
         return existingUser;
     }

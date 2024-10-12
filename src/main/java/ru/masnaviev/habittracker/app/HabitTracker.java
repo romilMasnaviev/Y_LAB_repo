@@ -36,8 +36,8 @@ public class HabitTracker {
                     case 1 -> accountManagement();
                     case 2 -> habitManagement();
                     case 3 -> trackingHabits();
-//                    case 4 -> viewStatistics();
-//                    case 5 -> viewNotifications();
+                    case 4 -> habitInputHandler.viewStatistics();
+                    case 5 -> viewNotifications();
                     case 6 -> running = false;
                     default -> displayIncorrectChoice();
                 }
@@ -47,9 +47,9 @@ public class HabitTracker {
 
     private void trackingHabits() {
         ConsoleView.displayTrackingMenu();
-        switch (getUserInputInt()){
+        switch (getUserInputInt()) {
             case 1 -> habitInputHandler.addHabitExecution();
-            case 2 -> habitInputHandler.getStatistic();
+            case 2 -> habitInputHandler.getHabits();
             default -> displayIncorrectChoice();
         }
     }
@@ -74,6 +74,10 @@ public class HabitTracker {
             case 3 -> System.out.println("Функциональность еще не добавлена");
             default -> displayIncorrectChoice();
         }
+    }
+
+    private void viewNotifications() {
+        System.out.println("Функциональность еще не добавлена");
     }
 
 }

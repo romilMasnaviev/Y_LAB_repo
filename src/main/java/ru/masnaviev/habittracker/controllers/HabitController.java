@@ -4,11 +4,11 @@ import ru.masnaviev.habittracker.in.converter.HabitConverter;
 import ru.masnaviev.habittracker.in.dto.CreateHabitRequest;
 import ru.masnaviev.habittracker.in.dto.UpdateHabitRequest;
 import ru.masnaviev.habittracker.model.Habit;
+import ru.masnaviev.habittracker.model.StatisticEntity;
 import ru.masnaviev.habittracker.model.TimePeriod;
 import ru.masnaviev.habittracker.service.HabitService;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class HabitController {
@@ -21,10 +21,10 @@ public class HabitController {
         this.habitConverter = new HabitConverter();
     }
 
-    public Habit create(CreateHabitRequest createRequest, long id) {
+    public Habit create(CreateHabitRequest createRequest, long userId) {
         validCreateHabitRequest(createRequest);
         Habit habit = habitConverter.createHabitRequestConvertToHabit(createRequest);
-        return habitService.create(habit, id);
+        return habitService.create(habit, userId);
     }
 
     public Habit update(UpdateHabitRequest updateRequest, long id) {
@@ -48,8 +48,12 @@ public class HabitController {
         habitService.addHabitExecution(id);
     }
 
-    public List<LocalDate> getStatistic(long habitId, TimePeriod timePeriod) {
-        return habitService.getStatistic(habitId,timePeriod);
+    public List<LocalDate> getExecutions(long habitId, TimePeriod timePeriod) {
+        return habitService.getExecutions(habitId, timePeriod);
+    }
+
+    public List<StatisticEntity> getStatistic(long userId, TimePeriod timePeriod) {
+        return habitService.getStatistic(userId, timePeriod);
     }
 
     private void validCreateHabitRequest(CreateHabitRequest createRequest) {

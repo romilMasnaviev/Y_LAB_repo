@@ -18,7 +18,6 @@ public class UserInputHandler {
         this.session = session;
     }
 
-
     public void create() {
         CreateUserRequest createRequest = new CreateUserRequest();
 
@@ -60,7 +59,6 @@ public class UserInputHandler {
             System.out.println("Пользователь успешно обновлен.");
         } catch (Exception e) {
             System.out.println("Ошибка: " + e.getMessage());
-            update();
         }
     }
 

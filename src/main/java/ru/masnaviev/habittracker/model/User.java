@@ -2,7 +2,6 @@ package ru.masnaviev.habittracker.model;
 
 public class User {
     private final Role role;
-
     private long id;
     private String email;
     private String password;
@@ -56,7 +55,9 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "email='" + email + '\'' +
+                "role=" + role +
+                ", id=" + id +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 '}';

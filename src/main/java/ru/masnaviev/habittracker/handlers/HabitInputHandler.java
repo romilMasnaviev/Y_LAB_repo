@@ -3,10 +3,7 @@ package ru.masnaviev.habittracker.handlers;
 import ru.masnaviev.habittracker.controllers.HabitController;
 import ru.masnaviev.habittracker.in.dto.CreateHabitRequest;
 import ru.masnaviev.habittracker.in.dto.UpdateHabitRequest;
-import ru.masnaviev.habittracker.model.Frequency;
-import ru.masnaviev.habittracker.model.Habit;
-import ru.masnaviev.habittracker.model.Session;
-import ru.masnaviev.habittracker.model.TimePeriod;
+import ru.masnaviev.habittracker.model.*;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -37,7 +34,6 @@ public class HabitInputHandler {
                 1. Ежедневно
                 2. Еженедельно
                 """);
-        // TODO проверка ввода
         switch (getUserInputInt()) {
             case 1 -> createRequest.setFrequency(Frequency.DAILY);
             case 2 -> createRequest.setFrequency(Frequency.WEEKLY);
@@ -52,114 +48,140 @@ public class HabitInputHandler {
     }
 
     public void getAll() {
-        List<Habit> habits = habitController.getAll(session.getUser().getId());
-        if (!habits.isEmpty()) {
-            out.println("""
-                    Выберите поле для сортировки:
-                    1. По дате создания
-                    2. По статусу
-                    """);
-            //TODO /\
-            switch (getUserInputInt()) {
-                case 1 -> habits.sort((o1, o2) -> {
-                    if (o1.getCreated().isAfter(o2.getCreated())) return -1;
-                    if (o1.getCreated().equals(o2.getCreated())) return 0;
-                    return 1;
-                });
-                case 2 -> habits.sort(Comparator.comparing(Habit::getFrequency));
-
-            }
-            displayHabits(habits);
-        } else {
-            out.println("У вас нет привычек");
+        List<Habit> habits;
+        try {
+            habits = habitController.getAll(session.getUser().getId());
+        } catch (Exception e) {
+            out.println("Ошибка при получении списка привычек: " + e.getMessage());
+            return;
         }
+        out.println("""
+                Выберите поле для сортировки:
+                1. По дате создания
+                2. По статусу
+                """);
+        switch (getUserInputInt()) {
+            case 1 -> habits.sort((o1, o2) -> {
+                if (o1.getCreated().isAfter(o2.getCreated())) return -1;
+                if (o1.getCreated().equals(o2.getCreated())) return 0;
+                return 1;
+            });
+            case 2 -> habits.sort(Comparator.comparing(Habit::getFrequency));
+        }
+        displayHabits(habits);
     }
+
 
     public void update() {
-        List<Habit> habitsOptional = habitController.getAll(session.getUser().getId());
+        List<Habit> habits;
+        try {
+            habits = habitController.getAll(session.getUser().getId());
+        } catch (Exception e) {
+            out.println("Ошибка при получении списка привычек: " + e.getMessage());
+            return;
+        }
 
-        if (!habitsOptional.isEmpty()) {
-            displayHabits(habitsOptional);
-            out.println("Выберите id привычки");
+        displayHabits(habits);
+        out.println("Введите id привычки для обновления:");
+        long habitId = getUserInputInt();
 
-            long habitId = getUserInputInt();
-            UpdateHabitRequest updateRequest = createUpdateHabitRequest(habitId);
-            try {
-                habitController.update(updateRequest, habitId);
-                out.println("Привычка успешно обновлена.");
-            } catch (Exception e) {
-                out.println("Ошибка: " + e.getMessage());
-            }
-        } else {
-            out.println("У вас нет привычек");
+        UpdateHabitRequest updateRequest = createUpdateHabitRequest(habitId);
+
+        try {
+            habitController.update(updateRequest, habitId);
+            out.println("Привычка успешно обновлена.");
+        } catch (Exception e) {
+            out.println("Ошибка при обновлении привычки: " + e.getMessage());
         }
     }
 
-    public void delete() {
-        List<Habit> habitsOptional = habitController.getAll(session.getUser().getId());
-        if (!habitsOptional.isEmpty()) {
-            displayHabits(habitsOptional);
-            out.println("Выберите id привычки");
 
-            long habitId = getUserInputInt();
-            try {
-                habitController.delete(habitId);
-                out.println("Привычка успешно удалена.");
-            } catch (Exception e) {
-                out.println("Ошибка: " + e.getMessage());
-            }
-        } else {
-            out.println("У вас нет привычек");
+    public void delete() {
+        List<Habit> habits;
+        try {
+            habits = habitController.getAll(session.getUser().getId());
+        } catch (Exception e) {
+            out.println("Ошибка при получении списка привычек: " + e.getMessage());
+            return;
+        }
+        displayHabits(habits);
+        out.println("Выберите id привычки");
+
+        long habitId = getUserInputInt();
+        try {
+            habitController.delete(habitId);
+            out.println("Привычка успешно удалена.");
+        } catch (Exception e) {
+            out.println("Ошибка: " + e.getMessage());
         }
     }
 
     public void addHabitExecution() {
-        List<Habit> habitsOptional = habitController.getAll(session.getUser().getId());
-        if (!habitsOptional.isEmpty()) {
-            displayHabits(habitsOptional);
-            out.println("Выберите id привычки");
+        List<Habit> habits;
+        try {
+            habits = habitController.getAll(session.getUser().getId());
+        } catch (Exception e) {
+            out.println("Ошибка при получении списка привычек: " + e.getMessage());
+            return;
+        }
 
-            long habitId = getUserInputInt();
-            try {
-                habitController.addHabitExecution(habitId);
-                out.println("Выполнение привычки успешно добавлено");
-            } catch (Exception e) {
-                out.println("Ошибка: " + e.getMessage());
-            }
-        } else {
-            out.println("У вас нет привычек");
+        displayHabits(habits);
+        out.println("Выберите id привычки");
+
+        long habitId = getUserInputInt();
+        try {
+            habitController.addHabitExecution(habitId);
+            out.println("Выполнение привычки успешно добавлено");
+        } catch (Exception e) {
+            out.println("Ошибка: " + e.getMessage());
+        }
+
+    }
+
+    public void getHabits() {
+        out.println("Выберите id привычки");
+
+        long habitId = getUserInputInt();
+
+        out.println("Выберите период для отображения");
+        out.println("""
+                1. День
+                2. Неделя
+                3. Месяц
+                """);
+        TimePeriod timePeriod;
+        switch (getUserInputInt()) {
+            case 1 -> timePeriod = TimePeriod.DAY;
+            case 2 -> timePeriod = TimePeriod.WEEK;
+            default -> timePeriod = TimePeriod.MONTH;
+        }
+        try {
+            List<LocalDate> habitExecutions = habitController.getExecutions(habitId, timePeriod);
+            out.println("Статистика за указанный срок (дни выполнения)");
+            out.println(habitExecutions);
+        } catch (Exception e) {
+            out.println("Ошибка: " + e.getMessage());
         }
     }
 
-    public void getStatistic() {
-        List<Habit> habitsOptional = habitController.getAll(session.getUser().getId());
-        if (!habitsOptional.isEmpty()) {
-            displayHabits(habitsOptional);
-            out.println("Выберите id привычки");
+    public void viewStatistics() {
 
-            long habitId = getUserInputInt();
+        out.println("Выберите период для отображения статистики");
+        out.println("""
+                1. День
+                2. Неделя
+                3. Месяц
+                """);
+        TimePeriod timePeriod;
+        switch (getUserInputInt()) {
+            case 1 -> timePeriod = TimePeriod.DAY;
+            case 2 -> timePeriod = TimePeriod.WEEK;
+            default -> timePeriod = TimePeriod.MONTH;
+        }
+        List<StatisticEntity> statistic = habitController.getStatistic(session.getUser().getId(), timePeriod);
 
-            out.println("Выберите период для отображения");
-            out.println("""
-                    1. День
-                    2. Неделя
-                    3. Месяц
-                    """);
-            TimePeriod timePeriod;
-            switch (getUserInputInt()) {
-                case 1 -> timePeriod = TimePeriod.DAY;
-                case 2 -> timePeriod = TimePeriod.WEEK;
-                default -> timePeriod = TimePeriod.MONTH;
-            }
-            try {
-                List<LocalDate> habitExecutions = habitController.getStatistic(habitId, timePeriod);
-                out.println("Статистика за указанный срок (дни выполнения)");
-                out.println(habitExecutions);
-            } catch (Exception e) {
-                out.println("Ошибка: " + e.getMessage());
-            }
-        } else {
-            out.println("У вас нет привычек");
+        for (StatisticEntity entity : statistic) {
+            out.println(entity);
         }
     }
 

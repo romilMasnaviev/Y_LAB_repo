@@ -6,8 +6,32 @@ import java.util.List;
 public class StatisticEntity {
     private long habitId;
     private List<LocalDate> habitExecutions;
-    private LocalDate created;
     private long currentStreak;
-    private long longestStreak;
-    private int executionRate;
+    private double successRate;
+
+    @Override
+    public String toString() {
+        return "StatisticEntity{" +
+                "habitId=" + habitId +
+                ", habitExecutions=" + habitExecutions +
+                ", currentStreak=" + currentStreak +
+                ", successRate=" + successRate +
+                '}';
+    }
+
+    public void setHabitId(long habitId) {
+        this.habitId = habitId;
+    }
+
+    public void setHabitExecutions(List<LocalDate> habitExecutions) {
+        this.habitExecutions = habitExecutions;
+    }
+
+    public void setCurrentStreak(long currentStreak) {
+        this.currentStreak = currentStreak;
+    }
+
+    public void setSuccessRate(double successRate) {
+        this.successRate = successRate;
+    }
 }
