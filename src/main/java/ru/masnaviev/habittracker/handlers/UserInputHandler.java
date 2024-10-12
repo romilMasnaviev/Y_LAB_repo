@@ -7,6 +7,7 @@ import ru.masnaviev.habittracker.in.dto.UpdateUserRequest;
 import ru.masnaviev.habittracker.model.Session;
 import ru.masnaviev.habittracker.model.User;
 
+import static java.lang.System.out;
 import static ru.masnaviev.habittracker.util.InputHandler.getUserInputString;
 
 public class UserInputHandler {
@@ -21,70 +22,59 @@ public class UserInputHandler {
     public void create() {
         CreateUserRequest createRequest = new CreateUserRequest();
 
-        System.out.println("Введите имя");
-        createRequest.setName(getUserInputString());
-        System.out.println("Введите почту");
-        createRequest.setEmail(getUserInputString());
-        System.out.println("Введите пароль");
-        createRequest.setPassword(getUserInputString());
-
-        try {
-            userController.create(createRequest);
-            System.out.println("Пользователь успешно создан.");
-        } catch (Exception e) {
-            System.out.println("Ошибка: " + e.getMessage());
-        }
+        createRequest.setName(promptForInput("Введите имя"));
+        createRequest.setEmail(promptForInput("Введите почту"));
+        createRequest.setPassword(promptForInput("Введите пароль"));
+        executeAction(() -> userController.create(createRequest),
+                "Пользователь успешно создан.");
     }
 
     public void update() {
         UpdateUserRequest updateRequest = new UpdateUserRequest();
+        User currentUser = session.getUser();
 
-        System.out.println("Текущий пользователь: " + session.getUser());
+        updateRequest.setName(promptForUpdate("Введите имя", currentUser.getName()));
+        updateRequest.setEmail(promptForUpdate("Введите почту", currentUser.getEmail()));
+        updateRequest.setPassword(promptForUpdate("Введите пароль", currentUser.getPassword()));
 
-        System.out.println("Введите имя (или нажмите Enter чтобы оставить текущее)");
-        String name = getUserInputString();
-        updateRequest.setName(name.isEmpty() ? session.getUser().getName() : name);
+        executeAction(() -> userController.update(updateRequest, currentUser.getId()),
+                "Пользователь успешно обновлен.");
 
-        System.out.println("Введите почту (или нажмите Enter чтобы оставить текущее)");
-        String email = getUserInputString();
-        updateRequest.setEmail(email.isEmpty() ? session.getUser().getEmail() : email);
-
-        System.out.println("Введите пароль (или нажмите Enter чтобы оставить текущее)");
-        String password = getUserInputString();
-        updateRequest.setPassword(password.isEmpty() ? session.getUser().getPassword() : password);
-
-        try {
-            User user = userController.update(updateRequest, session.getUser().getId());
-            session.setUser(user);
-            System.out.println("Пользователь успешно обновлен.");
-        } catch (Exception e) {
-            System.out.println("Ошибка: " + e.getMessage());
-        }
     }
 
     public void delete() {
-        try {
-            userController.delete(session.getUser().getId());
-            session.setUser(null);
-
-            System.out.println("Профиль успешно удален.");
-        } catch (Exception e) {
-            System.out.println("Ошибка: " + e.getMessage());
-        }
+        executeAction(() -> userController.delete(session.getUser().getId()),
+                "Профиль успешно удален.");
+        session.setUser(null);
     }
 
     public void login() {
         LoginUserRequest loginRequest = new LoginUserRequest();
 
-        System.out.println("Введите почту");
-        loginRequest.setEmail(getUserInputString());
-        System.out.println("Введите пароль");
-        loginRequest.setPassword(getUserInputString());
+        loginRequest.setEmail(promptForInput("Введите почту"));
+        loginRequest.setPassword(promptForInput("Введите пароль"));
+
+        executeAction(() -> session.setUser(userController.authenticateUser(loginRequest)),
+                "Вход успешен.");
+    }
+
+    private String promptForInput(String prompt) {
+        out.println(prompt);
+        return getUserInputString();
+    }
+
+    private String promptForUpdate(String prompt, String currentValue) {
+        out.println(prompt + " (или нажмите Enter, чтобы оставить текущее: " + currentValue + ")");
+        String input = getUserInputString();
+        return input.isEmpty() ? currentValue : input;
+    }
+
+    private void executeAction(Runnable action, String successMessage) {
         try {
-            session.setUser(userController.authenticateUser(loginRequest));
-            System.out.println("Вход успешен.");
+            action.run();
+            out.println(successMessage);
         } catch (Exception e) {
-            System.out.println("Ошибка: " + e.getMessage());
+            out.println("Ошибка: " + e.getMessage());
         }
     }
 }

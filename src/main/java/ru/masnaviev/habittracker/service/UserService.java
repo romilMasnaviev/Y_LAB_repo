@@ -42,7 +42,7 @@ public class UserService {
         if (!existingUser.getPassword().equals(user.getPassword())) {
             throw new IllegalArgumentException("Неправильный пароль для пользователя с email " + user.getEmail());
         }
-        return user;
+        return existingUser;
     }
 
 
